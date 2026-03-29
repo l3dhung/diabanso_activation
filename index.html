@@ -154,6 +154,37 @@
       .status.warn {
         color: var(--warn);
       }
+
+      .hintBox {
+        background: #eef4ef;
+        border: 1px solid #cdd9d3;
+        border-radius: 14px;
+        padding: 12px 14px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .hintTitle {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .fieldHint {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      select {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid #a9b9b1;
+        background: #fffdf7;
+        padding: 12px 14px;
+        color: var(--text);
+        font: inherit;
+      }
     </style>
   </head>
   <body>
@@ -182,7 +213,23 @@
 
       <section class="card">
         <h2>Thông tin đầu vào</h2>
+        <div class="hintBox">
+          <p class="hintTitle">Chọn đúng loại mã trước khi sinh</p>
+          <p id="modeHint" class="note">
+            Mã riêng theo thiết bị chỉ dùng cho đúng một thiết bị có mã `DBS-...`.
+          </p>
+        </div>
         <div class="row two">
+          <label>
+            Chế độ
+            <select id="mode">
+              <option value="device_code">Mã riêng theo thiết bị</option>
+              <option value="public_trial">Mã trial công khai</option>
+            </select>
+            <span class="fieldHint" id="modeFieldHint">
+              Dùng khi cấp mã chính thức theo mã thiết bị.
+            </span>
+          </label>
           <label>
             Mã thiết bị
             <input
@@ -191,12 +238,45 @@
               placeholder="DBS-XXXX-XXXX-XX"
               autocomplete="off"
             />
+            <span class="fieldHint" id="installationIdHint">
+              Bắt buộc với mã riêng theo thiết bị.
+            </span>
           </label>
           <label>
             Label
             <input id="label" type="text" placeholder="Ví dụ: Cấp cho Nguyễn Văn A" />
+            <span class="fieldHint" id="labelHint">
+              Dùng để ghi nhớ mã này cấp cho ai hoặc mục đích gì.
+            </span>
           </label>
         </div>
+        <label>
+          Số ngày trial
+          <input
+            id="trialDays"
+            type="number"
+            min="1"
+            step="1"
+            value="30"
+            placeholder="Chỉ dùng cho mã trial công khai"
+          />
+          <span class="fieldHint" id="trialDaysHint">
+            Chỉ áp dụng cho mã trial công khai.
+          </span>
+        </label>
+        <label>
+          Số ngày hiệu lực
+          <input
+            id="effectiveDays"
+            type="number"
+            min="1"
+            step="1"
+            placeholder="Bỏ trống nếu không giới hạn thời hạn"
+          />
+          <span class="fieldHint" id="effectiveDaysHint">
+            Chỉ áp dụng cho mã riêng theo thiết bị.
+          </span>
+        </label>
         <label>
           Hết hạn
           <input
@@ -204,6 +284,9 @@
             type="text"
             placeholder="Tuỳ chọn, ví dụ 2026-12-31T23:59:59.000Z"
           />
+          <span class="fieldHint" id="expiresHint">
+            Chỉ nên dùng với mã riêng theo thiết bị nếu cần giới hạn theo ngày cụ thể.
+          </span>
         </label>
         <div class="actions">
           <button id="generateButton" type="button">Sinh mã kích hoạt</button>
@@ -222,9 +305,8 @@
           Payload
           <textarea id="payloadView" class="mono" readonly></textarea>
         </label>
-        <p class="note">
-          Mã này chỉ hợp lệ với đúng mã thiết bị đã nhập. Nếu thay keypair, tất cả
-          mã cũ sẽ mất hiệu lực.
+        <p id="resultNote" class="note">
+          Mã này chỉ hợp lệ với đúng mã thiết bị đã nhập. Nếu thay keypair, tất cả mã cũ sẽ mất hiệu lực.
         </p>
       </section>
     </main>

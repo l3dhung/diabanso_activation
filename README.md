@@ -24,11 +24,17 @@ docs/activation-webapp/activation-tool-config.js
 1. Mở trang `index.html`
 2. Nhập passphrase để mở khóa công cụ
 3. Nhập:
-   - `Mã thiết bị`
-   - `Label`
-   - `Hết hạn` nếu cần
+   - chọn `Mã riêng theo thiết bị` hoặc `Mã trial công khai`
+   - nếu là `Mã riêng theo thiết bị`: nhập `Mã thiết bị`, `Label`, và có thể nhập `Số ngày hiệu lực` hoặc `Hết hạn`
+   - nếu là `Mã trial công khai`: nhập `Số ngày trial`, có thể để trống `Label`
 4. Bấm `Sinh mã kích hoạt`
 5. Copy chuỗi vừa sinh và gửi cho người dùng
+
+## Quy tắc thời hạn cho mã riêng theo thiết bị
+
+- Nếu nhập `Số ngày hiệu lực`, webapp sẽ tự tính `Hết hạn` kể từ lúc sinh mã.
+- Nếu để trống `Số ngày hiệu lực` và cũng không nhập `Hết hạn`, mã sẽ không có thời hạn.
+- Nếu nhập cả `Số ngày hiệu lực` và `Hết hạn`, webapp ưu tiên `Số ngày hiệu lực`.
 
 ## Lưu ý bảo mật
 

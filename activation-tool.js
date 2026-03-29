@@ -3,15 +3,26 @@
   const elements = {
     activationCode: document.getElementById('activationCode'),
     copyButton: document.getElementById('copyButton'),
+    effectiveDays: document.getElementById('effectiveDays'),
+    effectiveDaysHint: document.getElementById('effectiveDaysHint'),
     expiresAt: document.getElementById('expiresAt'),
     generateButton: document.getElementById('generateButton'),
     generateStatus: document.getElementById('generateStatus'),
     installationId: document.getElementById('installationId'),
     label: document.getElementById('label'),
+    mode: document.getElementById('mode'),
+    modeFieldHint: document.getElementById('modeFieldHint'),
+    modeHint: document.getElementById('modeHint'),
     passphrase: document.getElementById('passphrase'),
     payloadView: document.getElementById('payloadView'),
+    resultNote: document.getElementById('resultNote'),
+    trialDays: document.getElementById('trialDays'),
+    trialDaysHint: document.getElementById('trialDaysHint'),
     unlockButton: document.getElementById('unlockButton'),
     unlockStatus: document.getElementById('unlockStatus'),
+    installationIdHint: document.getElementById('installationIdHint'),
+    expiresHint: document.getElementById('expiresHint'),
+    labelHint: document.getElementById('labelHint'),
   };
 
   let privateKeyBase64Url = null;
@@ -41,22 +52,113 @@
     return bytes;
   }
 
+  function addDaysToIsoDate(issuedAtIso, days) {
+    const expiresAt = new Date(issuedAtIso);
+    expiresAt.setDate(expiresAt.getDate() + days);
+    return expiresAt.toISOString();
+  }
+
+  function readPositiveInteger(value, fieldLabel) {
+    if (!value) {
+      return null;
+    }
+
+    const parsed = Number(value);
+
+    if (!Number.isInteger(parsed) || parsed <= 0) {
+      throw new Error(`${fieldLabel} phải là số nguyên dương.`);
+    }
+
+    return parsed;
+  }
+
   function buildPayload() {
     const installationId = elements.installationId.value.trim();
     const activationLabel = elements.label.value.trim() || null;
-    const expiresAt = elements.expiresAt.value.trim() || null;
+    const expiresAtInput = elements.expiresAt.value.trim() || null;
+    const mode = elements.mode.value;
+    const trialDays = readPositiveInteger(elements.trialDays.value || '30', 'Số ngày trial');
+    const effectiveDays = readPositiveInteger(
+      elements.effectiveDays.value.trim(),
+      'Số ngày hiệu lực',
+    );
 
-    if (!installationId) {
+    if (mode === 'device_code' && !installationId) {
       throw new Error('Nhập mã thiết bị.');
     }
 
+    if (mode === 'device_code' && expiresAtInput) {
+      const expiresAtTime = new Date(expiresAtInput).getTime();
+
+      if (Number.isNaN(expiresAtTime)) {
+        throw new Error('Hết hạn chưa đúng định dạng thời gian.');
+      }
+    }
+
+    const issuedAt = new Date().toISOString();
+    const expiresAt =
+      mode === 'public_trial'
+        ? null
+        : effectiveDays
+          ? addDaysToIsoDate(issuedAt, effectiveDays)
+          : expiresAtInput;
+
     return {
       version: 1,
-      installationId,
-      activationLabel,
+      activationMode: mode,
+      installationId: mode === 'public_trial' ? null : installationId,
+      activationLabel:
+        activationLabel || (mode === 'public_trial' ? `Mã dùng thử công khai ${trialDays} ngày` : null),
       expiresAt,
-      issuedAt: new Date().toISOString(),
+      trialDurationDays: mode === 'public_trial' ? trialDays : null,
+      issuedAt,
     };
+  }
+
+  function syncModeUi() {
+    const mode = elements.mode.value;
+    const isPublicTrial = mode === 'public_trial';
+
+    elements.installationId.disabled = isPublicTrial;
+    elements.expiresAt.disabled = isPublicTrial;
+    elements.effectiveDays.disabled = isPublicTrial;
+    elements.trialDays.disabled = !isPublicTrial;
+
+    if (isPublicTrial) {
+      elements.modeHint.textContent =
+        'Mã trial công khai cho người dùng vào app ngay. Mỗi thiết bị chỉ dùng trial một lần.';
+      elements.modeFieldHint.textContent =
+        'Dùng cho mã dùng thử hiển thị công khai trên màn kích hoạt.';
+      elements.installationIdHint.textContent =
+        'Không cần nhập với mã trial công khai.';
+      elements.trialDaysHint.textContent =
+        'Nhập số ngày cho thời gian dùng thử trên mỗi thiết bị.';
+      elements.effectiveDaysHint.textContent =
+        'Không áp dụng ở chế độ mã trial công khai.';
+      elements.expiresHint.textContent =
+        'Không dùng ở chế độ này vì trial sẽ tự tính hạn theo số ngày.';
+      elements.labelHint.textContent =
+        'Có thể để trống, webapp sẽ tự tạo nhãn trial mặc định.';
+      elements.resultNote.textContent =
+        'Mã này là trial công khai. Thiết bị dùng trial một lần, hết hạn sẽ phải dùng mã kích hoạt chính thức.';
+    } else {
+      elements.modeHint.textContent =
+        'Mã riêng theo thiết bị chỉ dùng cho đúng một thiết bị có mã DBS-...';
+      elements.modeFieldHint.textContent =
+        'Dùng khi cấp mã chính thức theo mã thiết bị.';
+      elements.installationIdHint.textContent =
+        'Bắt buộc với mã riêng theo thiết bị.';
+      elements.trialDaysHint.textContent =
+        'Không áp dụng ở chế độ mã riêng theo thiết bị.';
+      elements.effectiveDaysHint.textContent =
+        'Nếu nhập, webapp sẽ tự tính hạn theo số ngày kể từ lúc sinh mã. Để trống nếu muốn mã không thời hạn.';
+      elements.expiresHint.textContent =
+        'Có thể nhập ngày hết hạn cụ thể. Nếu đồng thời nhập số ngày hiệu lực, webapp sẽ ưu tiên số ngày hiệu lực.';
+      elements.labelHint.textContent =
+        'Dùng để ghi nhớ mã này cấp cho ai hoặc mục đích gì.';
+      elements.resultNote.textContent =
+        'Mã này chỉ hợp lệ với đúng mã thiết bị đã nhập. Nếu thay keypair, tất cả mã cũ sẽ mất hiệu lực.';
+    }
   }
 
   function unlockKey() {
@@ -136,4 +238,6 @@
   elements.unlockButton.addEventListener('click', unlockKey);
   elements.generateButton.addEventListener('click', generateCode);
   elements.copyButton.addEventListener('click', copyCode);
+  elements.mode.addEventListener('change', syncModeUi);
+  syncModeUi();
 })();
