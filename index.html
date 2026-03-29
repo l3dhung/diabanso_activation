@@ -1,319 +1,299 @@
 <!doctype html>
 <html lang="vi">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>Địa Bàn Số • Sinh mã kích hoạt</title>
-    <style>
-      :root {
-        color-scheme: light;
-        --bg: #f3efe5;
-        --panel: #fffdf7;
-        --line: #d4ddd8;
-        --text: #17352b;
-        --muted: #5d746b;
-        --primary: #17624a;
-        --danger: #8f2f27;
-        --warn: #9a6124;
-      }
 
-      * {
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Địa Bàn Số • Sinh mã kích hoạt</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3efe5;
+      --panel: #fffdf7;
+      --line: #d4ddd8;
+      --text: #17352b;
+      --muted: #5d746b;
+      --primary: #17624a;
+      --danger: #8f2f27;
+      --warn: #9a6124;
+    }
 
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      .page {
-        width: min(900px, 100%);
-        margin: 0 auto;
-        padding: 24px 16px 48px;
-        display: grid;
-        gap: 16px;
-      }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-      .card {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        padding: 16px;
-        display: grid;
-        gap: 12px;
-      }
+    .page {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+      display: grid;
+      gap: 16px;
+    }
 
-      .eyebrow {
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: var(--primary);
-      }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
 
-      h1, h2 {
-        margin: 0;
-      }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
 
-      h1 {
-        font-size: 32px;
-        line-height: 1.15;
-      }
+    h1,
+    h2 {
+      margin: 0;
+    }
 
-      h2 {
-        font-size: 20px;
-      }
+    h1 {
+      font-size: 32px;
+      line-height: 1.15;
+    }
 
-      p {
-        margin: 0;
-        color: var(--muted);
-      }
+    h2 {
+      font-size: 20px;
+    }
 
-      label {
-        display: grid;
-        gap: 6px;
-        font-weight: 600;
-      }
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
 
-      input, textarea {
-        width: 100%;
-        border-radius: 14px;
-        border: 1px solid #a9b9b1;
-        background: #fffdf7;
-        padding: 12px 14px;
-        color: var(--text);
-        font: inherit;
-      }
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 600;
+    }
 
-      textarea {
-        min-height: 120px;
-        resize: vertical;
-      }
+    input,
+    textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #a9b9b1;
+      background: #fffdf7;
+      padding: 12px 14px;
+      color: var(--text);
+      font: inherit;
+    }
 
-      .row {
-        display: grid;
-        gap: 12px;
-      }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
 
-      @media (min-width: 760px) {
-        .row.two {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
+    .row {
+      display: grid;
+      gap: 12px;
+    }
 
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+    @media (min-width: 760px) {
+      .row.two {
+        grid-template-columns: 1fr 1fr;
       }
+    }
 
-      button {
-        border: 0;
-        border-radius: 14px;
-        padding: 12px 16px;
-        background: var(--primary);
-        color: #fffdf7;
-        font: inherit;
-        font-weight: 700;
-      }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-      button.secondary {
-        background: #fffdf7;
-        color: var(--text);
-        border: 1px solid #a9b9b1;
-      }
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      background: var(--primary);
+      color: #fffdf7;
+      font: inherit;
+      font-weight: 700;
+    }
 
-      .mono {
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        word-break: break-word;
-      }
+    button.secondary {
+      background: #fffdf7;
+      color: var(--text);
+      border: 1px solid #a9b9b1;
+    }
 
-      .note {
-        font-size: 14px;
-        color: var(--muted);
-      }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      word-break: break-word;
+    }
 
-      .status {
-        font-size: 14px;
-        font-weight: 600;
-      }
+    .note {
+      font-size: 14px;
+      color: var(--muted);
+    }
 
-      .status.ok {
-        color: var(--primary);
-      }
+    .status {
+      font-size: 14px;
+      font-weight: 600;
+    }
 
-      .status.error {
-        color: var(--danger);
-      }
+    .status.ok {
+      color: var(--primary);
+    }
 
-      .status.warn {
-        color: var(--warn);
-      }
+    .status.error {
+      color: var(--danger);
+    }
 
-      .hintBox {
-        background: #eef4ef;
-        border: 1px solid #cdd9d3;
-        border-radius: 14px;
-        padding: 12px 14px;
-        display: grid;
-        gap: 6px;
-      }
+    .status.warn {
+      color: var(--warn);
+    }
 
-      .hintTitle {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text);
-      }
+    .hintBox {
+      background: #eef4ef;
+      border: 1px solid #cdd9d3;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+    }
 
-      .fieldHint {
-        font-size: 13px;
-        color: var(--muted);
-      }
+    .hintTitle {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
 
-      select {
-        width: 100%;
-        border-radius: 14px;
-        border: 1px solid #a9b9b1;
-        background: #fffdf7;
-        padding: 12px 14px;
-        color: var(--text);
-        font: inherit;
-      }
-    </style>
-  </head>
-  <body>
-    <main class="page">
-      <section class="card">
-        <div class="eyebrow">Địa Bàn Số</div>
-        <h1>Sinh mã kích hoạt</h1>
-        <p>
-          Webapp này sinh mã kích hoạt ngay trên trình duyệt. Private key không
-          được để thô trong source; bạn phải mở khóa bằng passphrase trước.
+    .fieldHint {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    select {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #a9b9b1;
+      background: #fffdf7;
+      padding: 12px 14px;
+      color: var(--text);
+      font: inherit;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="eyebrow">Địa Bàn Số</div>
+      <h1>Sinh mã kích hoạt</h1>
+      <p>
+        Tạo mã kích hoạt cho ứng dụng Địa bàn số. Mã kích hoạt có thể là mã riêng theo thiết bị hoặc mã trial công khai
+        tuỳ mục đích sử dụng.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Mở khóa công cụ</h2>
+      <p>Nhập passphrase.</p>
+      <label>
+        Passphrase
+        <input id="passphrase" type="password" placeholder="Nhập passphrase mở khóa" />
+      </label>
+      <div class="actions">
+        <button id="unlockButton" type="button">Mở khóa</button>
+      </div>
+      <div id="unlockStatus" class="status warn">Chưa mở khóa</div>
+    </section>
+
+    <section class="card">
+      <h2>Thông tin đầu vào</h2>
+      <div class="hintBox">
+        <p class="hintTitle">Chọn đúng loại mã trước khi sinh</p>
+        <p id="modeHint" class="note">
+          Mã riêng theo thiết bị chỉ dùng cho đúng một thiết bị có mã `DBS-...`.
         </p>
-      </section>
-
-      <section class="card">
-        <h2>Mở khóa công cụ</h2>
-        <p>Nhập passphrase đã dùng khi tạo file cấu hình cho webapp này.</p>
+      </div>
+      <div class="row two">
         <label>
-          Passphrase
-          <input id="passphrase" type="password" placeholder="Nhập passphrase mở khóa" />
-        </label>
-        <div class="actions">
-          <button id="unlockButton" type="button">Mở khóa</button>
-        </div>
-        <div id="unlockStatus" class="status warn">Chưa mở khóa</div>
-      </section>
-
-      <section class="card">
-        <h2>Thông tin đầu vào</h2>
-        <div class="hintBox">
-          <p class="hintTitle">Chọn đúng loại mã trước khi sinh</p>
-          <p id="modeHint" class="note">
-            Mã riêng theo thiết bị chỉ dùng cho đúng một thiết bị có mã `DBS-...`.
-          </p>
-        </div>
-        <div class="row two">
-          <label>
-            Chế độ
-            <select id="mode">
-              <option value="device_code">Mã riêng theo thiết bị</option>
-              <option value="public_trial">Mã trial công khai</option>
-            </select>
-            <span class="fieldHint" id="modeFieldHint">
-              Dùng khi cấp mã chính thức theo mã thiết bị.
-            </span>
-          </label>
-          <label>
-            Mã thiết bị
-            <input
-              id="installationId"
-              type="text"
-              placeholder="DBS-XXXX-XXXX-XX"
-              autocomplete="off"
-            />
-            <span class="fieldHint" id="installationIdHint">
-              Bắt buộc với mã riêng theo thiết bị.
-            </span>
-          </label>
-          <label>
-            Label
-            <input id="label" type="text" placeholder="Ví dụ: Cấp cho Nguyễn Văn A" />
-            <span class="fieldHint" id="labelHint">
-              Dùng để ghi nhớ mã này cấp cho ai hoặc mục đích gì.
-            </span>
-          </label>
-        </div>
-        <label>
-          Số ngày trial
-          <input
-            id="trialDays"
-            type="number"
-            min="1"
-            step="1"
-            value="30"
-            placeholder="Chỉ dùng cho mã trial công khai"
-          />
-          <span class="fieldHint" id="trialDaysHint">
-            Chỉ áp dụng cho mã trial công khai.
+          Chế độ
+          <select id="mode">
+            <option value="device_code">Mã riêng theo thiết bị</option>
+            <option value="public_trial">Mã trial công khai</option>
+          </select>
+          <span class="fieldHint" id="modeFieldHint">
+            Dùng khi cấp mã chính thức theo mã thiết bị.
           </span>
         </label>
         <label>
-          Số ngày hiệu lực
-          <input
-            id="effectiveDays"
-            type="number"
-            min="1"
-            step="1"
-            placeholder="Bỏ trống nếu không giới hạn thời hạn"
-          />
-          <span class="fieldHint" id="effectiveDaysHint">
-            Chỉ áp dụng cho mã riêng theo thiết bị.
+          Mã thiết bị
+          <input id="installationId" type="text" placeholder="DBS-XXXX-XXXX-XX" autocomplete="off" />
+          <span class="fieldHint" id="installationIdHint">
+            Bắt buộc với mã riêng theo thiết bị.
           </span>
         </label>
         <label>
-          Hết hạn
-          <input
-            id="expiresAt"
-            type="text"
-            placeholder="Tuỳ chọn, ví dụ 2026-12-31T23:59:59.000Z"
-          />
-          <span class="fieldHint" id="expiresHint">
-            Chỉ nên dùng với mã riêng theo thiết bị nếu cần giới hạn theo ngày cụ thể.
+          Label
+          <input id="label" type="text" placeholder="Ví dụ: Cấp cho Nguyễn Văn A" />
+          <span class="fieldHint" id="labelHint">
+            Dùng để ghi nhớ mã này cấp cho ai hoặc mục đích gì.
           </span>
         </label>
-        <div class="actions">
-          <button id="generateButton" type="button">Sinh mã kích hoạt</button>
-          <button id="copyButton" class="secondary" type="button">Copy mã</button>
-        </div>
-        <div id="generateStatus" class="status warn">Chưa sinh mã</div>
-      </section>
+      </div>
+      <label>
+        Số ngày trial
+        <input id="trialDays" type="number" min="1" step="1" value="30" placeholder="Chỉ dùng cho mã trial công khai" />
+        <span class="fieldHint" id="trialDaysHint">
+          Chỉ áp dụng cho mã trial công khai.
+        </span>
+      </label>
+      <label>
+        Số ngày hiệu lực
+        <input id="effectiveDays" type="number" min="1" step="1" placeholder="Bỏ trống nếu không giới hạn thời hạn" />
+        <span class="fieldHint" id="effectiveDaysHint">
+          Chỉ áp dụng cho mã riêng theo thiết bị.
+        </span>
+      </label>
+      <label>
+        Hết hạn
+        <input id="expiresAt" type="text" placeholder="Tuỳ chọn, ví dụ 2026-12-31T23:59:59.000Z" />
+        <span class="fieldHint" id="expiresHint">
+          Chỉ nên dùng với mã riêng theo thiết bị nếu cần giới hạn theo ngày cụ thể.
+        </span>
+      </label>
+      <div class="actions">
+        <button id="generateButton" type="button">Sinh mã kích hoạt</button>
+        <button id="copyButton" class="secondary" type="button">Copy mã</button>
+      </div>
+      <div id="generateStatus" class="status warn">Chưa sinh mã</div>
+    </section>
 
-      <section class="card">
-        <h2>Kết quả</h2>
-        <label>
-          Activation code
-          <textarea id="activationCode" class="mono" readonly></textarea>
-        </label>
-        <label>
-          Payload
-          <textarea id="payloadView" class="mono" readonly></textarea>
-        </label>
-        <p id="resultNote" class="note">
-          Mã này chỉ hợp lệ với đúng mã thiết bị đã nhập. Nếu thay keypair, tất cả mã cũ sẽ mất hiệu lực.
-        </p>
-      </section>
-    </main>
+    <section class="card">
+      <h2>Kết quả</h2>
+      <label>
+        Activation code
+        <textarea id="activationCode" class="mono" readonly></textarea>
+      </label>
+      <label>
+        Payload
+        <textarea id="payloadView" class="mono" readonly></textarea>
+      </label>
+      <p id="resultNote" class="note">
+        Mã này chỉ hợp lệ với đúng mã thiết bị đã nhập. Nếu thay keypair, tất cả mã cũ sẽ mất hiệu lực.
+      </p>
+    </section>
+  </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/crypto-js.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js"></script>
-    <script src="./activation-tool-config.js"></script>
-    <script src="./activation-tool.js"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/crypto-js.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js"></script>
+  <script src="./activation-tool-config.js"></script>
+  <script src="./activation-tool.js"></script>
+</body>
+
 </html>
